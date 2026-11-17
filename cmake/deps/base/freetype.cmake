@@ -23,3 +23,11 @@ elseif(SWITCH)
 elseif(APPLE)
   message(FATAL_ERROR "TODO")
 endif()
+
+# Define alias for Freetype::Freetype because in-tree build is nasty
+# and does not define the Freetype::Freetype target itself
+#
+# Defined here and not in the branch to cover override calls as well
+if(NOT TARGET Freetype::Freetype)
+  add_library(Freetype::Freetype ALIAS freetype-interface)
+endif()
