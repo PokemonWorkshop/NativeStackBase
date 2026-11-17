@@ -9,3 +9,13 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake
 # Define helpers
 # ##############################################################################
 include(DeclareNativeDependency)
+
+# ##############################################################################
+# Tests
+# ##############################################################################
+option(HELPER_TEST_SUITE "Enable the CMake helper test suite" OFF)
+
+if(HELPER_TEST_SUITE)
+  enable_testing()
+  add_subdirectory(tests)
+endif()
