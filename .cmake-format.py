@@ -29,26 +29,25 @@ with section("markup"):
     enable_markup = False
 
 with section("parse"):
+    # Keep these in sync with _parse_declare_native_dependency_args() in
+    # cmake/helpers/DeclareNativeDependency.cmake: one positional argument (the
+    # dependency name), every field one-valued, and OPTIONS variadic.
+    _declare_native_dependency_spec = {
+        "pargs": 1,
+        "kwargs": {
+            "MODE": 1,
+            "SOURCE_URL": 1,
+            "SOURCE_HASH": 1,
+            "GIT_URL": 1,
+            "GIT_TAG": 1,
+            "BIN_URL": 1,
+            "BIN_HASH": 1,
+            "SCRIPT": 1,
+            "OPTIONS": "*",
+        },
+    }
+
     additional_commands = {
-        "declare_override_native_dependency": {
-            "pargs": 1,
-            "kwargs": {
-                "MODE": 1,
-                "SOURCE_URL": 1,
-                "SOURCE_TAG": 1,
-                "TARBALL_URL": 1,
-                "TARBALL_HASH": 1,
-            },
-        },
-        "declare_default_native_dependency": {
-            "pargs": 0,
-            "kwargs": {
-                "NAME": 1,
-                "MODE": 1,
-                "SOURCE_URL": 1,
-                "SOURCE_TAG": 1,
-                "TARBALL_URL": 1,
-                "TARBALL_HASH": 1,
-            },
-        },
+        "declare_default_native_dependency": _declare_native_dependency_spec,
+        "declare_override_native_dependency": _declare_native_dependency_spec,
     }
