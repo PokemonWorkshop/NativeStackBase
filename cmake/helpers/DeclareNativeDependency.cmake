@@ -238,7 +238,7 @@ endfunction()
 
 # Find a library on the sysroot / system
 function(_declare_nd_sysroot dep_name)
-  find_package(${dep_name} REQUIRED)
+  find_package(${dep_name} REQUIRED GLOBAL)
 endfunction()
 
 # Download the source code of a library from a bin_url
@@ -275,12 +275,24 @@ function(_declare_nd_bin_url dep_name url hash)
     URL_HASH ${hash}
   )
   FetchContent_MakeAvailable(${dep_name}_bin)
-  FetchContent_GetProperties(${dep_name}_bin)
+  # FetchContent reports its directories under the lowercased name, whatever
+  # case the dependency was declared with.
+  string(TOLOWER "${dep_name}" _lc_dep_name)
+  FetchContent_GetProperties(${_lc_dep_name}_bin)
 
   # try find_package on the bin_url
+  #
+  # NO_DEFAULT_PATH: keep the system packages out
+  # NO_CMAKE_FIND_ROOT_PATH: keep the sysroot out
+  # GLOBAL: make the found package available globally
   find_package(
-    ${dep_name} REQUIRED PATHS ${${dep_name}_bin_SOURCE_DIR}
+    ${dep_name}
+    REQUIRED
+    PATHS
+    ${${_lc_dep_name}_bin_SOURCE_DIR}
+    NO_DEFAULT_PATH
     NO_CMAKE_FIND_ROOT_PATH
+    GLOBAL
   )
 endfunction()
 

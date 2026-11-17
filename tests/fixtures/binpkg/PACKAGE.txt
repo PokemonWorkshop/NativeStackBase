@@ -1,0 +1,1 @@
+Fake prebuilt package for the bin_url tests. The CMake config lives in cmake/.

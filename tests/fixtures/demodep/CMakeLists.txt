@@ -14,3 +14,9 @@ option(DEMO_OTHER "An option the test suite usually leaves alone" OFF)
 # message(STATUS) is not line-wrapped by CMake, so the test regexes can match it
 # in one piece.
 message(STATUS "DEP SEES DEMO_OPT='${DEMO_OPT}' DEMO_OTHER='${DEMO_OTHER}'")
+
+# A target for the scope cases to look for. add_library() targets are global, in
+# contrast with the IMPORTED targets find_package() produces.
+add_library(
+  demodep_marker INTERFACE
+)

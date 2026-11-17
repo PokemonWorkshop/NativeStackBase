@@ -6,7 +6,7 @@ elseif(WIN32)
   # Use provided MSYS2 package
   declare_default_native_dependency(freetype MODE sysroot)
 elseif(LINUX)
-  # Build from source
+  # Build from source in-tree
   declare_default_native_dependency(
     freetype
     MODE source_url

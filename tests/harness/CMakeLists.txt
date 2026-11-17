@@ -7,7 +7,16 @@
 cmake_minimum_required(VERSION 3.28)
 project(nd_helper_case LANGUAGES NONE)
 
-foreach(_required IN ITEMS ND_HELPERS_DIR ND_CASE ND_DEP_ARCHIVE ND_DEP_HASH)
+foreach(
+  _required IN
+  ITEMS ND_HELPERS_DIR
+        ND_CASE
+        ND_FIXTURES_DIR
+        ND_DEP_ARCHIVE
+        ND_DEP_HASH
+        ND_BIN_ARCHIVE
+        ND_BIN_HASH
+)
   if(NOT DEFINED ${_required})
     message(FATAL_ERROR "test harness: -D${_required}=... is required")
   endif()
