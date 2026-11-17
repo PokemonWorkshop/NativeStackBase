@@ -232,6 +232,50 @@ function(declare_override_native_dependency dep_name)
 
 endfunction()
 
+# nd_get_dependency_mode()
+#
+# Report, in <out_var>, the mode a native dependency is actually provided with.
+#
+# This helper should mostly be used by CMake adapters looking to understand how a specific
+# dependency is actually provided. (ex: SFML and its shenanigans).
+#
+# If you use it in any other case, think twice, you might be relying on internal details you should not depend on.
+#
+# Usage:
+# nd_get_dependency_mode(<name> <out_var>)
+#
+# e.g.
+#   nd_get_dependency_mode(foo _foo_mode)
+#   if(_foo_mode STREQUAL "sysroot")
+#     # the dependency comes installed, with whatever its config package defines
+#   endif()
+#
+function(nd_get_dependency_mode dep_name out_var)
+  if(NOT ARGC EQUAL 2)
+    message(
+      FATAL_ERROR
+        "nd_get_dependency_mode: expected exactly <name> and <out_var>, got ${ARGC} arguments"
+    )
+  endif()
+
+  if(DEFINED ENV{_ND_OVERRIDE_${dep_name}_MODE})
+    set(${out_var}
+        "$ENV{_ND_OVERRIDE_${dep_name}_MODE}"
+        PARENT_SCOPE
+    )
+  elseif(DEFINED ENV{_ND_${dep_name}_MODE})
+    set(${out_var}
+        "$ENV{_ND_${dep_name}_MODE}"
+        PARENT_SCOPE
+    )
+  else()
+    set(${out_var}
+        "NOTFOUND"
+        PARENT_SCOPE
+    )
+  endif()
+endfunction()
+
 # ##############################################################################
 # Internal functions
 # ##############################################################################

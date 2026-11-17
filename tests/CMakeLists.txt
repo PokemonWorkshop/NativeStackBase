@@ -152,6 +152,15 @@ nd_add_case(override-conflicting EXPECT_ERROR PASS "OPTIONS DEMO_OTHER: 'ON'")
 nd_add_case(override-declared-too-late EXPECT_ERROR PASS "too late")
 
 # ##############################################################################
+# nd_get_dependency_mode
+# ##############################################################################
+
+nd_add_case(get-mode-default PASS "MODE REPORTED: source_url")
+nd_add_case(get-mode-override-wins PASS "MODE REPORTED: sysroot")
+nd_add_case(get-mode-undeclared PASS "MODE REPORTED: NOTFOUND")
+nd_add_case(get-mode-rejects-extra-args EXPECT_ERROR PASS "expected exactly")
+
+# ##############################################################################
 # Argument validation
 # ##############################################################################
 
